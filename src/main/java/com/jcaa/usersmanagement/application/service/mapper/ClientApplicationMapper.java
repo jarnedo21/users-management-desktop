@@ -1,6 +1,7 @@
 package com.jcaa.usersmanagement.application.service.mapper;
 
 import com.jcaa.usersmanagement.application.service.dto.command.CreateClientCommand;
+import com.jcaa.usersmanagement.application.service.dto.query.GetClientByCodeQuery;
 import com.jcaa.usersmanagement.domain.enums.ClientActivityType;
 import com.jcaa.usersmanagement.domain.model.ClientModel;
 import com.jcaa.usersmanagement.domain.valueobject.ClientCode;
@@ -19,5 +20,9 @@ public class ClientApplicationMapper {
         new ClientPhone(command.phone()),
         command.contactPerson().trim(),
         ClientActivityType.fromString(command.activityType()));
+  }
+
+  public ClientCode fromGetClientByCodeQueryToCode(final GetClientByCodeQuery query) {
+    return new ClientCode(query.code());
   }
 }
