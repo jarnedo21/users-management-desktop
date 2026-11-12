@@ -9,6 +9,11 @@ public final class PersistenceException extends RuntimeException {
   private static final String MESSAGE_ALL = "Failed to retrieve all users.";
   private static final String MESSAGE_DELETE = "Failed to delete user with ID: '%s'.";
   private static final String MESSAGE_CONNECTION = "Could not establish database connection.";
+  private static final String MESSAGE_CLIENT_SAVE = "Failed to save client with code: '%s'.";
+  private static final String MESSAGE_CLIENT_UPDATE = "Failed to update client with code: '%s'.";
+  private static final String MESSAGE_CLIENT_FIND = "Failed to find client with code: '%s'.";
+  private static final String MESSAGE_CLIENT_ALL = "Failed to retrieve all clients.";
+  private static final String MESSAGE_CLIENT_DELETE = "Failed to delete client with code: '%s'.";
 
   private PersistenceException(final String message, final Throwable cause) {
     super(message, cause);
@@ -44,5 +49,29 @@ public final class PersistenceException extends RuntimeException {
 
   public static PersistenceException becauseConnectionFailed(final Throwable cause) {
     return new PersistenceException(MESSAGE_CONNECTION, cause);
+  }
+
+  public static PersistenceException becauseClientSaveFailed(
+      final String code, final Throwable cause) {
+    return new PersistenceException(String.format(MESSAGE_CLIENT_SAVE, code), cause);
+  }
+
+  public static PersistenceException becauseClientUpdateFailed(
+      final String code, final Throwable cause) {
+    return new PersistenceException(String.format(MESSAGE_CLIENT_UPDATE, code), cause);
+  }
+
+  public static PersistenceException becauseClientFindByCodeFailed(
+      final String code, final Throwable cause) {
+    return new PersistenceException(String.format(MESSAGE_CLIENT_FIND, code), cause);
+  }
+
+  public static PersistenceException becauseClientFindAllFailed(final Throwable cause) {
+    return new PersistenceException(MESSAGE_CLIENT_ALL, cause);
+  }
+
+  public static PersistenceException becauseClientDeleteFailed(
+      final String code, final Throwable cause) {
+    return new PersistenceException(String.format(MESSAGE_CLIENT_DELETE, code), cause);
   }
 }
