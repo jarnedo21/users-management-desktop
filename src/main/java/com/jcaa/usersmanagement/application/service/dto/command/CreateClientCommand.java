@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 
 public record CreateClientCommand(
     @NotBlank(message = "code must not be blank")
-        @Size(max = 20, message = "code must have at most 20 characters")
+        @Size(max = 10, message = "code must have at most 10 characters")
         String code,
     @NotBlank(message = "name must not be blank")
         @Size(min = 3, message = "name must have at least 3 characters")

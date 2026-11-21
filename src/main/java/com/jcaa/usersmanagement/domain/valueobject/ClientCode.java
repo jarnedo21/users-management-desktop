@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public record ClientCode(String value) {
 
-  private static final int MAXIMUM_LENGTH = 20;
+  private static final int MAXIMUM_LENGTH = 10;
 
   public ClientCode {
     final String normalizedValue =
