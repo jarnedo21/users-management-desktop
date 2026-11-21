@@ -22,7 +22,7 @@ public final class CreateClientHandler implements OperationHandler {
     final String address       = console.readRequired("Address                                : ");
     final String phone         = console.readRequired("Phone                                  : ");
     final String contactPerson = console.readRequired("Contact person                         : ");
-    final String activityType  = console.readRequired("Activity type (FASHION / ADVERTISING_FILM): ");
+    final String activityType  = console.readRequired("Activity type (MODA / PUBLICIDAD_CINE)  : ");
 
     try {
       final ClientResponse created =
