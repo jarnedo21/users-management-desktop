@@ -1,6 +1,7 @@
 package com.jcaa.usersmanagement.application.service.mapper;
 
 import com.jcaa.usersmanagement.application.service.dto.command.CreateClientCommand;
+import com.jcaa.usersmanagement.application.service.dto.command.DeleteClientCommand;
 import com.jcaa.usersmanagement.application.service.dto.command.UpdateClientCommand;
 import com.jcaa.usersmanagement.application.service.dto.query.GetClientByCodeQuery;
 import com.jcaa.usersmanagement.domain.enums.ClientActivityType;
@@ -35,5 +36,9 @@ public class ClientApplicationMapper {
 
   public ClientCode fromGetClientByCodeQueryToCode(final GetClientByCodeQuery query) {
     return new ClientCode(query.code());
+  }
+
+  public ClientCode fromDeleteCommandToCode(final DeleteClientCommand command) {
+    return new ClientCode(command.code());
   }
 }
