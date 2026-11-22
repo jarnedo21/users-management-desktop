@@ -1,23 +1,35 @@
 package com.jcaa.usersmanagement.infrastructure.config;
 
+import com.jcaa.usersmanagement.application.port.in.CreateClientUseCase;
 import com.jcaa.usersmanagement.application.port.in.CreateUserUseCase;
+import com.jcaa.usersmanagement.application.port.in.DeleteClientUseCase;
 import com.jcaa.usersmanagement.application.port.in.DeleteUserUseCase;
+import com.jcaa.usersmanagement.application.port.in.GetAllClientsUseCase;
 import com.jcaa.usersmanagement.application.port.in.GetAllUsersUseCase;
+import com.jcaa.usersmanagement.application.port.in.GetClientByCodeUseCase;
 import com.jcaa.usersmanagement.application.port.in.GetUserByIdUseCase;
 import com.jcaa.usersmanagement.application.port.in.LoginUseCase;
+import com.jcaa.usersmanagement.application.port.in.UpdateClientUseCase;
 import com.jcaa.usersmanagement.application.port.in.UpdateUserUseCase;
+import com.jcaa.usersmanagement.application.service.CreateClientService;
 import com.jcaa.usersmanagement.application.service.CreateUserService;
+import com.jcaa.usersmanagement.application.service.DeleteClientService;
 import com.jcaa.usersmanagement.application.service.DeleteUserService;
 import com.jcaa.usersmanagement.application.service.EmailNotificationService;
+import com.jcaa.usersmanagement.application.service.GetAllClientsService;
 import com.jcaa.usersmanagement.application.service.GetAllUsersService;
+import com.jcaa.usersmanagement.application.service.GetClientByCodeService;
 import com.jcaa.usersmanagement.application.service.GetUserByIdService;
 import com.jcaa.usersmanagement.application.service.LoginService;
+import com.jcaa.usersmanagement.application.service.UpdateClientService;
 import com.jcaa.usersmanagement.application.service.UpdateUserService;
 import com.jcaa.usersmanagement.infrastructure.adapter.email.JavaMailEmailSenderAdapter;
 import com.jcaa.usersmanagement.infrastructure.adapter.email.SmtpConfig;
 import com.jcaa.usersmanagement.infrastructure.adapter.persistence.config.DatabaseConfig;
 import com.jcaa.usersmanagement.infrastructure.adapter.persistence.config.DatabaseConnectionFactory;
+import com.jcaa.usersmanagement.infrastructure.adapter.persistence.repository.ClientRepositorySqlServer;
 import com.jcaa.usersmanagement.infrastructure.adapter.persistence.repository.UserRepositorySqlServer;
+import com.jcaa.usersmanagement.infrastructure.entrypoint.desktop.controller.ClientController;
 import com.jcaa.usersmanagement.infrastructure.entrypoint.desktop.controller.UserController;
 
 import java.sql.Connection;
@@ -39,6 +51,7 @@ public final class DependencyContainer {
   private static final String SMTP_FROM_NAME = "smtp.from.name";
 
   private final UserController userController;
+  private final ClientController clientController;
 
   public DependencyContainer() {
     final AppProperties properties = new AppProperties();
@@ -71,10 +84,38 @@ public final class DependencyContainer {
             getUserByIdUseCase,
             getAllUsersUseCase,
             loginUseCase);
+
+    this.clientController = buildClientController(connection, validator);
   }
 
   public UserController userController() {
     return userController;
+  }
+
+  public ClientController clientController() {
+    return clientController;
+  }
+
+  private static ClientController buildClientController(
+      final Connection connection, final Validator validator) {
+    final ClientRepositorySqlServer clientRepository = new ClientRepositorySqlServer(connection);
+
+    final CreateClientUseCase createClientUseCase =
+        new CreateClientService(clientRepository, clientRepository, validator);
+    final UpdateClientUseCase updateClientUseCase =
+        new UpdateClientService(clientRepository, clientRepository, validator);
+    final DeleteClientUseCase deleteClientUseCase =
+        new DeleteClientService(clientRepository, clientRepository, validator);
+    final GetClientByCodeUseCase getClientByCodeUseCase =
+        new GetClientByCodeService(clientRepository, validator);
+    final GetAllClientsUseCase getAllClientsUseCase = new GetAllClientsService(clientRepository);
+
+    return new ClientController(
+        createClientUseCase,
+        updateClientUseCase,
+        deleteClientUseCase,
+        getClientByCodeUseCase,
+        getAllClientsUseCase);
   }
 
   private static Connection buildDatabaseConnection(final AppProperties properties) {

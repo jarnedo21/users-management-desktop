@@ -54,6 +54,9 @@ class DependencyContainerTest {
       assertNotNull(
           container.userController(),
           "userController() must return a non-null UserController after successful construction");
+      assertNotNull(
+          container.clientController(),
+          "clientController() must return a non-null ClientController after successful construction");
     }
   }
 
