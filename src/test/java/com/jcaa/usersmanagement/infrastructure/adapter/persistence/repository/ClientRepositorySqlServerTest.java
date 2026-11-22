@@ -57,6 +57,7 @@ class ClientRepositorySqlServerTest {
 
     assertEquals(client(), result);
     verify(statement).executeUpdate();
+    verify(statement).setString(6, "MODA");
   }
 
   @Test
@@ -162,7 +163,7 @@ class ClientRepositorySqlServerTest {
     when(resultSet.getString("direccion")).thenReturn("Calle 30");
     when(resultSet.getString("telefono")).thenReturn("3001234567");
     when(resultSet.getString("persona_contacto")).thenReturn("Laura Perez");
-    when(resultSet.getString("tipo_actividad")).thenReturn("FASHION");
+    when(resultSet.getString("tipo_actividad")).thenReturn("MODA");
   }
 
   private static ClientModel client() {

@@ -50,7 +50,7 @@ public final class ClientDesktopMapper {
         client.getAddress(),
         client.getPhone().value(),
         client.getContactPerson(),
-        client.getActivityType().name());
+        client.getActivityType().getDatabaseValue());
   }
 
   public static List<ClientResponse> toResponseList(final List<ClientModel> clients) {

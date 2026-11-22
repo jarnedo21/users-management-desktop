@@ -51,7 +51,7 @@ class ClientControllerTest {
 
   private static final ClientResponse RESPONSE =
       new ClientResponse(
-          "CLI-001", "Moda Caribe", "Calle 30", "3001234567", "Laura Perez", "FASHION");
+          "CLI-001", "Moda Caribe", "Calle 30", "3001234567", "Laura Perez", "MODA");
 
   @BeforeEach
   void setUp() {

@@ -22,7 +22,7 @@ public final class UpdateClientHandler implements OperationHandler {
     final String address       = console.readRequired("New address                            : ");
     final String phone         = console.readRequired("New phone                              : ");
     final String contactPerson = console.readRequired("New contact person                     : ");
-    final String activityType  = console.readRequired("Activity type (FASHION / ADVERTISING_FILM): ");
+    final String activityType  = console.readRequired("Activity type (MODA / PUBLICIDAD_CINE)  : ");
 
     try {
       final ClientResponse updated =

@@ -16,16 +16,27 @@ class ClientActivityTypeTest {
     "FASHION, FASHION",
     "fashion, FASHION",
     "ADVERTISING_FILM, ADVERTISING_FILM",
-    "advertising_film, ADVERTISING_FILM"
+    "advertising_film, ADVERTISING_FILM",
+    "MODA, FASHION",
+    "moda, FASHION",
+    "PUBLICIDAD_CINE, ADVERTISING_FILM",
+    "publicidad_cine, ADVERTISING_FILM"
   })
-  @DisplayName("fromString() resolves values ignoring case")
+  @DisplayName("fromString() resolves enum names and database values ignoring case")
   void shouldResolveIgnoringCase(final String input, final ClientActivityType expected) {
     assertEquals(expected, ClientActivityType.fromString(input));
   }
 
   @ParameterizedTest
+  @CsvSource({"FASHION, MODA", "ADVERTISING_FILM, PUBLICIDAD_CINE"})
+  @DisplayName("getDatabaseValue() matches the CK_CLIENTE_TIPO constraint values")
+  void shouldExposeDatabaseValue(final ClientActivityType type, final String expected) {
+    assertEquals(expected, type.getDatabaseValue());
+  }
+
+  @ParameterizedTest
   @NullSource
-  @ValueSource(strings = {"", "CINE", "MODA_Y_CINE"})
+  @ValueSource(strings = {"", "CINE", "MODA_Y_CINE", "PUBLICIDAD"})
   @DisplayName("fromString() throws InvalidClientActivityTypeException for unknown values")
   void shouldThrowForUnknownValues(final String input) {
     assertThrows(

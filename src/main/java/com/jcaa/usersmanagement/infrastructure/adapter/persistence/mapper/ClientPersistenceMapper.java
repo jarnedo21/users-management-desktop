@@ -24,7 +24,7 @@ public class ClientPersistenceMapper {
         client.getAddress(),
         client.getPhone().value(),
         client.getContactPerson(),
-        client.getActivityType().name());
+        client.getActivityType().getDatabaseValue());
   }
 
   public ClientEntity fromResultSetToEntity(final ResultSet resultSet) throws SQLException {
