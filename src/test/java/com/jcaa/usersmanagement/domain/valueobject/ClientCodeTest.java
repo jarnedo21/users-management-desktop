@@ -33,9 +33,9 @@ class ClientCodeTest {
   }
 
   @Test
-  @DisplayName("Should throw InvalidClientCodeException when ClientCode exceeds 20 characters")
+  @DisplayName("Should throw InvalidClientCodeException when ClientCode exceeds 10 characters")
   void shouldThrowWhenTooLong() {
-    final String tooLong = "X".repeat(21);
+    final String tooLong = "X".repeat(11);
     assertThrows(InvalidClientCodeException.class, () -> new ClientCode(tooLong));
   }
 }
